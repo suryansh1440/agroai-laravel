@@ -1,0 +1,34 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agro-ai-app
+    container_name: agro-ai-app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - agro-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: agro-ai-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8004:80"
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - agro-network
+
+networks:
+  agro-network:
+    driver: bridge
