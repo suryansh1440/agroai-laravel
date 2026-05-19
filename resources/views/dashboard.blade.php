@@ -20,81 +20,207 @@
                 <p class="text-stone-500 dark:text-stone-400">Here's what's happening with your farm today.</p>
             </div>
 
-            <!-- Feature Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                <!-- Crop Recommendation Card -->
-                <a href="{{ route('crop.recommendation') }}" class="group p-6 bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 hover:border-green-500 transition-all shadow-sm hover:shadow-xl">
-                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2 dark:text-white">Crop Advisor</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed mb-4">Get AI-powered crop suggestions based on your soil type.</p>
-                    <span class="text-green-600 font-bold text-xs inline-flex items-center gap-1 group-hover:gap-2 transition-all">Launch AI <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span>
-                </a>
 
-                <!-- Pest Prediction Card -->
-                <a href="{{ route('pest.prediction') }}" class="group p-6 bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 hover:border-red-500 transition-all shadow-sm hover:shadow-xl">
-                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900/50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2 dark:text-white">Pest Guard</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed mb-4">Predict and prevent pest outbreaks before they happen.</p>
-                    <span class="text-red-600 font-bold text-xs inline-flex items-center gap-1 group-hover:gap-2 transition-all">Check Risks <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span>
-                </a>
 
-                <!-- Irrigation Tips Card -->
-                <a href="{{ route('irrigation.tips') }}" class="group p-6 bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 hover:border-blue-500 transition-all shadow-sm hover:shadow-xl">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+            <!-- Dynamic Data Hub (Weather & Market) -->
+            <div x-data="dashboardData()" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+                
+                <!-- Weather Widget -->
+                <div class="bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 p-8 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-blue-500 transition-all hover:shadow-xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                        </div>
+                        <div x-show="weatherLoading" class="w-6 h-6 border-2 border-stone-600 border-t-blue-500 rounded-full animate-spin" style="display: none;"></div>
                     </div>
-                    <h3 class="text-lg font-bold mb-2 dark:text-white">AquaFlow</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed mb-4">Smart watering tips based on real-time weather forecasts.</p>
-                    <span class="text-blue-600 font-bold text-xs inline-flex items-center gap-1 group-hover:gap-2 transition-all">Optimize Water <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span>
-                </a>
+                    
+                    <h3 class="text-xl font-bold dark:text-white mb-2">Current Weather</h3>
+                    <div x-show="!weatherLoading" class="flex flex-col gap-1" style="display: none;">
+                        <div class="flex items-end gap-4">
+                            <span class="text-4xl font-bold text-stone-900 dark:text-white" x-text="weather ? weather.temperature + '°C' : '--'"></span>
+                            <span class="text-sm text-stone-500 mb-1" x-text="weather ? 'Wind: ' + weather.windspeed + ' km/h' : ''"></span>
+                        </div>
+                        <div class="flex items-center gap-1 text-sm text-stone-500 mt-1 font-medium" x-show="locationName">
+                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span x-text="locationName"></span>
+                        </div>
+                    </div>
+                    <div x-show="weatherLoading" class="text-stone-500 animate-pulse text-xl">Detecting location...</div>
+                    <p class="text-stone-500 text-sm leading-relaxed mt-4">Real-time localized weather data for optimal farm operations.</p>
+                </div>
 
-                <!-- Chatbot Card -->
-                <a href="{{ route('chatbot') }}" class="group p-6 bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 hover:border-purple-500 transition-all shadow-sm hover:shadow-xl">
-                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                <!-- Market Trends Widget -->
+                <div class="bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 p-8 shadow-sm group hover:border-amber-500 transition-all hover:shadow-xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold mb-2 dark:text-white">Agro Chat</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed mb-4">Talk to AI in English, Hindi, or Punjabi for expert advice.</p>
-                    <span class="text-purple-600 font-bold text-xs inline-flex items-center gap-1 group-hover:gap-2 transition-all">Start Chatting <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span>
-                </a>
+                    <h3 class="text-xl font-bold dark:text-white mb-2">Market Prices</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4 mt-4">
+                        <template x-for="crop in marketData" :key="crop.name">
+                            <div class="flex items-center justify-between p-3 bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-100 dark:border-stone-700">
+                                <div>
+                                    <span class="text-xs text-stone-500 dark:text-stone-400 block" x-text="crop.name"></span>
+                                    <span class="font-bold text-stone-900 dark:text-white" x-text="crop.price"></span>
+                                </div>
+                                <div :class="crop.trend === 'up' ? 'text-green-500 bg-green-100 dark:bg-green-900/30' : 'text-red-500 bg-red-100 dark:bg-red-900/30'" class="px-2 py-1 rounded flex items-center gap-1 text-[10px] font-bold">
+                                    <svg x-show="crop.trend === 'up'" class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                                    <svg x-show="crop.trend === 'down'" class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    <span x-text="crop.change"></span>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Quick Stats/Insights -->
-            <div class="bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 p-8 shadow-sm">
-                <h3 class="text-xl font-bold mb-6 dark:text-white">Recent Farm Insights</h3>
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between p-4 bg-stone-50 dark:bg-stone-800 rounded-2xl border border-stone-100 dark:border-stone-700">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+            <!-- Insights & Schemes Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Quick Stats/Insights -->
+                <div class="bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 p-8 shadow-sm flex flex-col">
+                    <h3 class="text-xl font-bold mb-6 dark:text-white">Recent Farm Insights</h3>
+                    <div class="space-y-4 flex-1">
+                        @forelse($insights as $insight)
+                        <div class="flex items-center justify-between p-4 bg-stone-50 dark:bg-stone-800 rounded-2xl border border-stone-100 dark:border-stone-700">
+                            <div class="flex items-center gap-4">
+                                @if($insight->type === 'weather')
+                                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                                    </div>
+                                @elseif($insight->type === 'soil')
+                                    <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/50 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                    </div>
+                                @elseif($insight->type === 'pest')
+                                    <div class="w-10 h-10 bg-red-100 dark:bg-red-900/50 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    </div>
+                                @else
+                                    <div class="w-10 h-10 bg-stone-100 dark:bg-stone-900/50 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    </div>
+                                @endif
+                                <div>
+                                    <h4 class="font-bold text-sm dark:text-white">{{ $insight->title }}</h4>
+                                    <p class="text-xs text-stone-500">{{ $insight->message }}</p>
+                                </div>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-sm dark:text-white">Weather Alert</h4>
-                                <p class="text-xs text-stone-500">Expect light rain in the next 48 hours. Adjust irrigation accordingly.</p>
-                            </div>
+                            <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest min-w-[60px] text-right">{{ $insight->created_at->diffForHumans() }}</span>
                         </div>
-                        <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">2h ago</span>
+                        @empty
+                        <div class="p-4 text-center text-stone-500 text-sm h-full flex items-center justify-center">
+                            No recent insights available.
+                        </div>
+                        @endforelse
                     </div>
+                </div>
 
-                    <div class="flex items-center justify-between p-4 bg-stone-50 dark:bg-stone-800 rounded-2xl border border-stone-100 dark:border-stone-700">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <!-- Active Govt Schemes -->
+                <div class="bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 p-8 shadow-sm flex flex-col">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold dark:text-white">Active Govt Schemes</h3>
+                        <span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-full text-[10px] font-bold tracking-wider uppercase animate-pulse">Live Feed</span>
+                    </div>
+                    <div class="space-y-4 flex-1">
+                        <!-- PM-Kisan -->
+                        <a href="https://pmkisan.gov.in/" target="_blank" class="group block p-4 bg-stone-50 dark:bg-stone-800 rounded-2xl border border-stone-100 dark:border-stone-700 hover:border-green-500 dark:hover:border-green-500 transition-all cursor-pointer shadow-sm hover:shadow-md">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="font-bold text-sm dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">PM-Kisan Samman Nidhi</h4>
+                                    <p class="text-xs text-stone-500 mt-1 line-clamp-2 leading-relaxed">₹6,000 per year income support for all landholding farmers. Check your next installment status.</p>
+                                </div>
+                                <svg class="w-4 h-4 text-stone-400 group-hover:text-green-500 transform group-hover:-translate-y-1 group-hover:translate-x-1 transition-all shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-sm dark:text-white">Soil Health</h4>
-                                <p class="text-xs text-stone-500">Your last soil test indicates nitrogen levels are optimal for Wheat.</p>
+                            <div class="mt-3 flex gap-2">
+                                <span class="text-[10px] bg-white dark:bg-stone-900 px-2 py-1 rounded text-stone-500 border border-stone-200 dark:border-stone-700 font-medium">Financial Aid</span>
+                                <span class="text-[10px] bg-white dark:bg-stone-900 px-2 py-1 rounded text-stone-500 border border-stone-200 dark:border-stone-700 font-medium">All States</span>
                             </div>
-                        </div>
-                        <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Yesterday</span>
+                        </a>
+
+                        <!-- PMFBY -->
+                        <a href="https://pmfby.gov.in/" target="_blank" class="group block p-4 bg-stone-50 dark:bg-stone-800 rounded-2xl border border-stone-100 dark:border-stone-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all cursor-pointer shadow-sm hover:shadow-md">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="font-bold text-sm dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">PMFBY Crop Insurance</h4>
+                                    <p class="text-xs text-stone-500 mt-1 line-clamp-2 leading-relaxed">Protect your crops against natural calamities. Premium subvention available for Kharif 2026.</p>
+                                </div>
+                                <svg class="w-4 h-4 text-stone-400 group-hover:text-blue-500 transform group-hover:-translate-y-1 group-hover:translate-x-1 transition-all shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </div>
+                            <div class="mt-3 flex gap-2">
+                                <span class="text-[10px] bg-white dark:bg-stone-900 px-2 py-1 rounded text-stone-500 border border-stone-200 dark:border-stone-700 font-medium">Insurance</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('dashboardData', () => ({
+                weather: null,
+                weatherLoading: true,
+                locationName: null,
+                marketData: [
+                    { name: 'Wheat', price: '₹2,300', trend: 'up', change: '+2.1%' },
+                    { name: 'Rice', price: '₹3,150', trend: 'up', change: '+1.5%' },
+                    { name: 'Cotton', price: '₹6,200', trend: 'down', change: '-0.8%' },
+                    { name: 'Sugarcane', price: '₹315', trend: 'up', change: '+0.5%' }
+                ],
+                
+                init() {
+                    this.fetchWeather();
+                },
+                
+                fetchWeather() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                const lat = position.coords.latitude;
+                                const lon = position.coords.longitude;
+                                this.getWeatherData(lat, lon);
+                            },
+                            (err) => {
+                                console.error('Geolocation error:', err);
+                                // Fallback to New Delhi
+                                this.getWeatherData(28.6139, 77.2090);
+                            }
+                        );
+                    } else {
+                        this.getWeatherData(28.6139, 77.2090);
+                    }
+                },
+
+                getWeatherData(lat, lon) {
+                    // Fetch weather
+                    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`)
+                        .then(res => res.json())
+                        .then(data => {
+                            this.weather = data.current_weather;
+                            this.weatherLoading = false;
+                        })
+                        .catch(err => {
+                            console.error('Weather fetch error:', err);
+                            this.weatherLoading = false;
+                        });
+
+                    // Fetch location name
+                    fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`)
+                        .then(res => res.json())
+                        .then(data => {
+                            let loc = '';
+                            if (data.city) loc += data.city;
+                            if (data.principalSubdivision) loc += (loc ? ', ' : '') + data.principalSubdivision;
+                            this.locationName = loc || 'Unknown Location';
+                        })
+                        .catch(err => console.error('Location fetch error:', err));
+                }
+            }));
+        });
+    </script>
 </x-app-layout>

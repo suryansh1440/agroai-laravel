@@ -33,24 +33,32 @@
         </div>
 
         <div class="bg-white p-12 rounded-[40px] shadow-2xl border border-stone-100">
-            <form action="#" class="space-y-8">
+            @if(session('success'))
+                <div class="mb-8 p-6 bg-green-50 border border-green-200 rounded-2xl text-green-700 font-bold flex items-center gap-4 animate-bounce-slow">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form action="{{ route('contact.submit') }}" method="POST" class="space-y-8">
+                @csrf
                 <div class="grid grid-cols-2 gap-8">
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-3">First Name</label>
-                        <input type="text" class="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-4 focus:ring-green-500 focus:border-green-500 transition-all" placeholder="John">
+                        <input type="text" name="first_name" required class="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-4 focus:ring-green-500 focus:border-green-500 transition-all" placeholder="John">
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-3">Last Name</label>
-                        <input type="text" class="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-4 focus:ring-green-500 focus:border-green-500 transition-all" placeholder="Doe">
+                        <input type="text" name="last_name" required class="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-4 focus:ring-green-500 focus:border-green-500 transition-all" placeholder="Doe">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-3">Email Address</label>
-                    <input type="email" class="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-4 focus:ring-green-500 focus:border-green-500 transition-all" placeholder="name@email.com">
+                    <input type="email" name="email" required class="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-4 focus:ring-green-500 focus:border-green-500 transition-all" placeholder="name@email.com">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-3">Message</label>
-                    <textarea rows="4" class="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-4 focus:ring-green-500 focus:border-green-500 transition-all" placeholder="Tell us about your farm..."></textarea>
+                    <textarea name="message" required rows="4" class="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-4 focus:ring-green-500 focus:border-green-500 transition-all" placeholder="Tell us about your farm..."></textarea>
                 </div>
                 <button type="submit" class="w-full py-5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-bold uppercase tracking-widest transition-all shadow-xl shadow-green-600/20">Send Message</button>
             </form>
