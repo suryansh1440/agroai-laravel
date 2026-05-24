@@ -1,59 +1,80 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# AgroAI - Intelligent Agricultural Solutions
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+AgroAI is a full-stack, AI-powered agricultural advisory platform designed to help farmers optimize their yields, prevent pest outbreaks, and manage irrigation efficiently. The application bridges modern AI technologies (OpenAI GPT-4) with sustainable farming practices, all styled in a premium "Cyberpunk-meets-Nature" design.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ⚡ Portable Docker Architecture
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+We have packaged the entire AgroAI stack into a **highly portable, single-container Docker image**. This makes sharing the project with team members, clients, or deploying to production effortless.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Key Benefits
+- **Zero Local Setup**: Your machine doesn't need PHP, Node.js, Composer, Nginx, or any local packages installed. Everything is built internally inside the container.
+- **Vite Pre-Compiled**: Frontend assets (Tailwind CSS, Alpine.js, and JS/CSS files) are compiled during the Docker build process.
+- **Nginx + PHP-FPM Co-existence**: A lightweight process Supervisor handles both Nginx and PHP-FPM seamlessly inside the same container.
+- **Remote DB Integration**: Directly uses the remote MongoDB Atlas connection specified in the `.env` file, removing the need to manage a local database.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🚀 Quick Start (Running the Application)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Follow these simple steps to run the application in less than 2 minutes:
 
-## Laravel Sponsors
+### 1. Prerequisites
+Ensure you have **Docker** and **Docker Compose** installed on your system.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Environment Configuration
+Make sure you have a `.env` file in the root of the project with your configurations. If you don't have one, copy the example:
+```bash
+cp .env.example .env
+```
+Ensure your `.env` contains the correct `DB_URI` (MongoDB Atlas) and `OPENAI_API_KEY`.
 
-### Premium Partners
+### 3. Launch the Application
+Run the following command in the root directory:
+```bash
+docker compose up -d --build
+```
+This command will:
+1. Pull the small, efficient base images.
+2. Compile and package the frontend assets using Node.
+3. Install all Composer dependencies.
+4. Set up Nginx and Supervisor.
+5. Launch the application on port **8004**.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Once the build finishes, open your browser and navigate to:
+👉 **[http://localhost:8004](http://localhost:8004)**
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🛠️ Management Commands
 
-## Code of Conduct
+Once the container is running, you can interact with it using standard Docker commands:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Run Database Migrations
+To set up indexes and MongoDB collections, execute migrations inside the container:
+```bash
+docker compose exec app php artisan migrate
+```
 
-## Security Vulnerabilities
+### View Application Logs
+To stream Laravel or server logs in real time:
+```bash
+docker compose logs -f
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Access Container Shell
+If you need to run arbitrary artisan or shell commands inside the environment:
+```bash
+docker compose exec app bash
+```
 
-## License
+### Stop the Application
+To stop the container:
+```bash
+docker compose down
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+*Developed by the AgroAI Engineering Team.*
